@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
-import java.io.File;
+import java.io.FileReader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PivotControllerTest {
     @Test
@@ -14,12 +16,11 @@ class PivotControllerTest {
             PivotController controller = new PivotController();
             ResponseEntity<String> response = controller.getPivots("src/test/resources/sampleData", 2);
             String actual = response.getBody();
-            System.out.println("============= :: "+actual);
             ObjectMapper objectMapper = new ObjectMapper();
-            File f = new File("src/test/resources/PivotAPIOutput.json");
-            //String data = objectMapper.readValue(f, String.class);
-            //System.out.println(data);
 
+            FileReader f = new FileReader("src/test/resources/PivotOutput.json");
+            String expected = objectMapper.readTree(f).toString();
+            assertEquals(expected, actual);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
