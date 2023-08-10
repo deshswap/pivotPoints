@@ -51,10 +51,4 @@ public class PivotController {
                 .parse();
         return stockData;
     }
-
-    @GetMapping(value = "/")
-    public String hello() {
-        return "Hello";
-    }
-
 }
